@@ -1,0 +1,22 @@
+{
+  "name": "mandatory-uxdesign2",
+  "version": "1.0.0",
+  "description": "ux - inlämning",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jonathandah/mandatory-uxdesign2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jonathandah/mandatory-uxdesign2/issues"
+  },
+  "homepage": "https://github.com/Jonathandah/mandatory-uxdesign2#readme",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
