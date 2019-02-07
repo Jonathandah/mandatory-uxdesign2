@@ -31,6 +31,20 @@ function submitForm (){
     let answers = view.answers;
 
     console.log(answers);
+    
+    model.formRequirements(answers);
     model.checkAnswers(answers);
 }
 
+function controllMenu(){
+    if(model.navbarButton === false){
+        model.navbarButton = true
+        view.renderMenu(model.navbarButton);
+        
+    }else{
+        model.navbarButton = false
+        view.renderMenu(model.navbarButton);
+    }
+}
+let navbarButton = document.querySelector(".navbar-toggler");
+navbarButton.addEventListener("click", controllMenu);

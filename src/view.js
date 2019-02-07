@@ -1,5 +1,8 @@
 export default{
     form: undefined,
+
+    sideBar: undefined,
+
     answers:[],
 
 render: function(array, main, randomize, submitForm){
@@ -42,6 +45,7 @@ render: function(array, main, randomize, submitForm){
                 radio.setAttribute("type", "radio");
                 radio.setAttribute("name", number);
                 radio.setAttribute("value", answer);
+                radio.setAttribute("required", "");
                 lable.setAttribute("for", number);
     
                 lable.textContent = answer;
@@ -58,9 +62,53 @@ render: function(array, main, randomize, submitForm){
             container.appendChild(ul);
             form.appendChild(container);
         }
-    
+
         form.appendChild(submitButton);
         main.appendChild(form);
+    },
+
+    renderMenu: function(buttonValue){
+        let body = document.querySelector("body");
+
+        if(buttonValue === true){
+            let sideBar = document.createElement("div");
+            let sideBar_header = document.createElement("div");
+            let sideBar_content = document.createElement("div");
+            let h2 = document.createElement("h2");
+            let aQuiz = document.createElement("a");
+            let aStats = document.createElement("a");
+            let aAbout = document.createElement("a");
+           
+            h2.textContent = "Game Of Quiz";
+            aQuiz.textContent = "Game Screen";
+            aStats.textContent = "Stats";
+            aAbout.textContent = "About";
+
+            aQuiz.setAttribute("href", "index.html");
+            aStats.setAttribute("href", "stats.html");
+            aAbout.setAttribute("href", "about.html");
+            
+            sideBar.classList.add("sidebar");
+            sideBar_header.classList.add("sidebar_header");
+            sideBar_content.classList.add("sidebar_content");
+            h2.classList.add("sidebarTitle");
+            aQuiz.classList.add("aLink");
+            aStats.classList.add("aLink");
+            aAbout.classList.add("aLink");
+
+            this.sideBar = sideBar;
+
+            sideBar_header.appendChild(h2);
+            sideBar_content.appendChild(aQuiz);
+            sideBar_content.appendChild(aStats);
+            sideBar_content.appendChild(aAbout);
+            sideBar.appendChild(sideBar_header);
+            sideBar.appendChild(sideBar_content);
+            body.appendChild(sideBar);
+        }else{
+            this.sideBar.innerHTML = "";
+            body.removeChild(this.sideBar);
+        }
     },
 
 }

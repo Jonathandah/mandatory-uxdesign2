@@ -67,9 +67,13 @@ export default{
         }
     }, 
 
-correctAnswers: function (){
+formRequirements: function (answers){
+    for(let asnwer in asnwers){
+        
+    }
+},
 
-}
+navbarButton: false,
 
 
 
