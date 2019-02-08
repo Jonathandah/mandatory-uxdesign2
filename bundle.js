@@ -20,12 +20,16 @@
         
         submitButton.addEventListener("click", submitForm);
         
-        submitButton.setAttribute("type", "submit");
-        
+        submitButton.setAttribute("type", "button"); 
+        submitButton.setAttribute("data-toggle", "modal");
+        submitButton.setAttribute("data-target", "#exampleModalCentered");
+
         submitButton.classList.add("btn");
         submitButton.classList.add("btn-dark");
         submitButton.classList.add("btn-lg");
+
         console.log(array);
+        
             for(let question of array){
                 let container = document.createElement("div");
                 let h3 = document.createElement("h3");
@@ -114,6 +118,10 @@
             }
         },
 
+        modalDialog: function ( modalBodyText, correctAnswers){
+            modalBodyText.textContent = "Du hade: " + correctAnswers + "/10" + " rätt!";
+        }
+
     };
 
     var model = {
@@ -171,18 +179,21 @@
         },
 
         checkAnswers: function(answers){
+            let count = 0;
+
             for(let answer of answers){
                 if(answer.checked){
                     let index = answer.name - 1; //numret måste stäma med array index som såklart börjar på 0;
 
                     if(answer.value === this.currentArray[index].correct_answer){
                         console.log("rätt");
+                        count++;
                     }else{
                         console.log("fel");
                     }
                 }
-                
             }
+            return count;
         }, 
 
     formRequirements: function (answers){
@@ -221,10 +232,12 @@
 
 
     function submitForm (){
+        let modalBodyText = document.querySelector(".modal-body-text");
         let answers = view.answers;
 
         console.log(answers);
-        model.checkAnswers(answers);
+        let correctAnswers = model.checkAnswers(answers);
+        view.modalDialog(modalBodyText, correctAnswers);
     }
 
     function controllMenu(){

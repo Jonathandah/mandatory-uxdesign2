@@ -28,12 +28,14 @@ quizButton.addEventListener("click", findApi);
 
 
 function submitForm (){
+    let modalBodyText = document.querySelector(".modal-body-text");
     let answers = view.answers;
 
     console.log(answers);
     
     model.formRequirements(answers);
-    model.checkAnswers(answers);
+    let correctAnswers = model.checkAnswers(answers);
+    view.modalDialog(modalBodyText, correctAnswers);
 }
 
 function controllMenu(){

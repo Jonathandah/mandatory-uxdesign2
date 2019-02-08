@@ -17,12 +17,16 @@ render: function(array, main, randomize, submitForm){
     
     submitButton.addEventListener("click", submitForm);
     
-    submitButton.setAttribute("type", "submit");
-    
+    submitButton.setAttribute("type", "button"); 
+    submitButton.setAttribute("data-toggle", "modal");
+    submitButton.setAttribute("data-target", "#exampleModalCentered");
+
     submitButton.classList.add("btn");
     submitButton.classList.add("btn-dark");
     submitButton.classList.add("btn-lg");
+
     console.log(array);
+    
         for(let question of array){
             let container = document.createElement("div");
             let h3 = document.createElement("h3");
@@ -110,5 +114,9 @@ render: function(array, main, randomize, submitForm){
             body.removeChild(this.sideBar);
         }
     },
+
+    modalDialog: function ( modalBodyText, correctAnswers){
+        modalBodyText.textContent = "Du hade: " + correctAnswers + "/10" + " rätt!";
+    }
 
 }

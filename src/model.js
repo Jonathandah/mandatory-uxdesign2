@@ -53,18 +53,21 @@ export default{
     },
 
     checkAnswers: function(answers){
+        let count = 0;
+
         for(let answer of answers){
             if(answer.checked){
                 let index = answer.name - 1; //numret måste stäma med array index som såklart börjar på 0;
 
                 if(answer.value === this.currentArray[index].correct_answer){
                     console.log("rätt");
+                    count++;
                 }else{
                     console.log("fel");
                 }
             }
-            
         }
+        return count;
     }, 
 
 formRequirements: function (answers){
