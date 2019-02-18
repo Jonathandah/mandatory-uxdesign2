@@ -1,3 +1,5 @@
+import model from "./model";
+
 export default{
     form: undefined,
 
@@ -5,67 +7,95 @@ export default{
 
     answers:[],
 
-render: function(array, main, randomize, submitForm){
-    let form = document.createElement("form");
-    let submitButton = document.createElement("buton");
-    
-    this.form = form;
+    renderStart: function(main, findApi){
+        main.innerHTML = "";
+        let h1 = document.createElement("h1");
+        let button = document.createElement("button");
 
-    main.innerHTML = ""
-    
-    submitButton.textContent = "submit";
-    
-    submitButton.addEventListener("click", submitForm);
-    
-    submitButton.setAttribute("type", "button"); 
-    submitButton.setAttribute("data-toggle", "modal");
-    submitButton.setAttribute("data-target", "#exampleModalCentered");
+        button.setAttribute("type", "button");
+        
+        button.id = "quizButton";
 
-    submitButton.classList.add("btn");
-    submitButton.classList.add("btn-dark");
-    submitButton.classList.add("btn-lg");
+        button.classList.add("btn", "btn-dark", "btn-lg");
+        h1.classList.add("title");
 
-    console.log(array);
-    
-        for(let question of array){
-            let container = document.createElement("div");
-            let h3 = document.createElement("h3");
-            let p = document.createElement("p");
-            let ul = document.createElement("ul");
-            
-            let number = array.indexOf(question) + 1;//numret på frågan
-    
-            h3.textContent = "Q." + number;
-            p.textContent = question.question
-    
-            container.classList.add("container");
-    
-            let allAnswers = randomize(question.correct_answer, question.incorrect_answers);
-    
-            for(let answer of allAnswers){
-                let li = document.createElement("li");
-                let radio = document.createElement("input");
-                let lable = document.createElement("lable");
-                radio.setAttribute("type", "radio");
-                radio.setAttribute("name", number);
-                radio.setAttribute("value", answer);
-                radio.setAttribute("required", "");
-                lable.setAttribute("for", number);
-    
-                lable.textContent = answer;
+        h1.textContent = "Game Of Quiz"
+        button.textContent = "Large button";
+
+        button.addEventListener("click", findApi);
+
+        main.appendChild(h1);
+        main.appendChild(button);
+
+    },
+
+    render: function(array, main, randomize, submitForm){
+        main.innerHTML = ""
+
+        let form = document.createElement("form");
+        let submitButton = document.createElement("buton");
+        
+        this.form = form;
+        
+        submitButton.textContent = "submit";
+        
+        submitButton.addEventListener("click", submitForm);
+        
+        submitButton.setAttribute("type", "submit"); 
+        submitButton.setAttribute("data-toggle", "modal");
+        submitButton.setAttribute("data-target", "#exampleModalCentered");
+
+        submitButton.classList.add("btn");
+        submitButton.classList.add("btn-dark");
+        submitButton.classList.add("btn-lg");
+
+        console.log(array);
+        
+            for(let question of array){
+                let container = document.createElement("div");
+                let h3 = document.createElement("h3");
+                let p = document.createElement("p");
+                let ul = document.createElement("ul");
                 
-                this.answers.push(radio);
+                let number = array.indexOf(question) + 1;//numret på frågan
+        
+                h3.textContent = "Q." + number;
+                p.textContent = question.question
+        
+                container.classList.add("container");
+                ul.classList.add("container__answers");
+                p.classList.add("contianer__question");
+                h3.classList.add("container__order");
+        
+                let allAnswers = randomize(question.correct_answer, question.incorrect_answers);
+        
+                for(let answer of allAnswers){
 
-                li.appendChild(radio)
-                li.appendChild(lable);
-                ul.appendChild(li);
+                    let li = document.createElement("li");
+                    let radio = document.createElement("input");
+                    let lable = document.createElement("lable");
+                    radio.setAttribute("type", "radio");
+                    radio.setAttribute("name", number);
+                    radio.setAttribute("value", answer);
+                    radio.setAttribute("required", "");
+                    lable.setAttribute("for", number);
+        
+                    lable.textContent = answer;
+                    
+                    li.classList.add("container__answers__value");
+                    
+                    this.answers.push(radio); 
+                    
+                    li.appendChild(radio);
+                    li.appendChild(lable);
+                    ul.appendChild(li);
+                }
+        
+                container.appendChild(h3);
+                container.appendChild(p);
+                container.appendChild(ul);
+                form.appendChild(container);
             }
-    
-            container.appendChild(h3);
-            container.appendChild(p);
-            container.appendChild(ul);
-            form.appendChild(container);
-        }
 
         form.appendChild(submitButton);
         main.appendChild(form);
@@ -115,8 +145,19 @@ render: function(array, main, randomize, submitForm){
         }
     },
 
-    modalDialog: function ( modalBodyText, correctAnswers){
-        modalBodyText.textContent = "Du hade: " + correctAnswers + "/10" + " rätt!";
-    }
+    modalDialog: function (body, modal, modalContent, correctAnswers, startMenu, findApi){
+        console.log(modalContent);
+        console.log(modalContent.childNodes[5].childNodes);
+        let modalText = modalContent.childNodes[3].childNodes[0];
+        let modalButtonClose = modalContent.childNodes[5].childNodes[1];
+        let modalButtonRestart = modalContent.childNodes[5].childNodes[3];
 
+        modalText.textContent = "Du hade: " + correctAnswers + "/10" + " rätt!";
+        
+
+                //måste få restart-knappen att funka
+
+        modalButtonClose.addEventListener("click", startMenu);
+    }
+ 
 }

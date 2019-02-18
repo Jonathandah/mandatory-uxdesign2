@@ -1,8 +1,17 @@
 export default{
     currentArray: undefined,
-    
+
+    navbarButton: false,
+
+    stats: {
+        gamesPlayed: 0,
+        correctAnswers: 0,
+        incorrectAnswers: 0,
+        correctPercentage: null,
+    },
+  /*  
     getApi: function(){
-        /*
+    
         let promise = new Promise(
             (resolve, reject) =>{
                 resolve(axios.get("https://opentdb.com/api.php?amount=10&type=multiple"));
@@ -17,11 +26,11 @@ export default{
             console.log(array);
             return array;
         })
-        /*
+        
     .catch(function(error){
         console.log(error)
     });
-    */
+
 
    axios.get('https://opentdb.com/api.php?amount=10&type=multiple')
    .then(function (response) {
@@ -33,7 +42,7 @@ export default{
      console.log(error);
    });
     },
-
+*/
     randomize: function (correct, incorrect){
         let array = [];
         array.push(correct);
@@ -58,11 +67,10 @@ export default{
         for(let answer of answers){
             if(answer.checked){
                 let index = answer.name - 1; //numret måste stäma med array index som såklart börjar på 0;
-
-                if(answer.value === this.currentArray[index].correct_answer){
+                if(answer.value === this.currentArray[index].correct_answer) {
                     console.log("rätt");
                     count++;
-                }else{
+                } else{
                     console.log("fel");
                 }
             }
@@ -70,14 +78,18 @@ export default{
         return count;
     }, 
 
-formRequirements: function (answers){
-    for(let asnwer in asnwers){
-        
+    formRequirements: function (answers){
+        for(let asnwer of asnwers){
+            // ska kolla så att alla radio buttons är itryckta 
+        }
+    },
+
+    statsUpdate: function (currentStats){
+        console.log(this.stats);
+        this.stats.gamesPlayed += 1;
+        this.stats.correctAnswers += currentStats;
+        this.stats.incorrectAnswers += 10 - currentStats;
+        this.stats.correctPercentage += ((currentStats/10) *100).toFixed(3); // msåte fixas
+        console.log(this.stats);
     }
-},
-
-navbarButton: false,
-
-
-
 }

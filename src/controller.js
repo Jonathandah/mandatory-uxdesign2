@@ -1,12 +1,21 @@
 import view from "./view";
 import model from "./model";
 
+let body = document.querySelector("body");
+let main = document.querySelector("main");
+
+// fixa en render till start page till closebutton på modal-dialog
+function startMenu(){
+    console.log("start Menu körs")
+    view.renderStart(main, findApi);
+}
+startMenu();
+
 function findApi (){
-    let main = document.querySelector("main");
     let promise = new Promise(
         (resolve, reject) =>{
             resolve(axios.get("https://opentdb.com/api.php?amount=10&type=multiple"));
-    
+            
             let error = new Error("faild to get Api");
             reject(error);
         }   
@@ -23,19 +32,18 @@ function findApi (){
     console.log(error)
 });   
 }
-let quizButton = document.querySelector("#quizButton");
-quizButton.addEventListener("click", findApi);
-
 
 function submitForm (){
-    let modalBodyText = document.querySelector(".modal-body-text");
+    let modal = document.querySelector(".modal");
+    let modalContent = document.querySelector(".modal-content");
     let answers = view.answers;
-
+    
     console.log(answers);
     
     model.formRequirements(answers);
     let correctAnswers = model.checkAnswers(answers);
-    view.modalDialog(modalBodyText, correctAnswers);
+    model.statsUpdate(correctAnswers);
+    view.modalDialog(body, modal, modalContent, correctAnswers, startMenu, findApi);
 }
 
 function controllMenu(){

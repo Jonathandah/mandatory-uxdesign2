@@ -47,3 +47,7 @@ main{
     padding: 50px; 
 }
 
+.container__answers{
+    list-style: none;
+}
+
