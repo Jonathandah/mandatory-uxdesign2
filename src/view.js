@@ -1,4 +1,4 @@
-import model from "./model";
+
 
 export default{
     form: undefined,
@@ -33,16 +33,17 @@ export default{
         main.innerHTML = ""
 
         let form = document.createElement("form");
-        let submitButton = document.createElement("buton");
+        let submitButton = document.createElement("button");
         
         this.form = form;
         
         submitButton.textContent = "submit";
         
-        submitButton.addEventListener("click", submitForm);
+        form.addEventListener("submit", function(e){
+            submitForm
+        });
         
         submitButton.setAttribute("type", "submit"); 
-        submitButton.setAttribute("data-toggle", "modal");
         submitButton.setAttribute("data-target", "#exampleModalCentered");
 
         submitButton.classList.add("btn");
@@ -60,7 +61,7 @@ export default{
                 let number = array.indexOf(question) + 1;//numret på frågan
         
                 h3.textContent = "Q." + number;
-                p.textContent = question.question
+                p.innerHTML = question.question
         
                 container.classList.add("container");
                 ul.classList.add("container__answers");
@@ -80,7 +81,7 @@ export default{
                     radio.setAttribute("required", "");
                     lable.setAttribute("for", number);
         
-                    lable.textContent = answer;
+                    lable.innerHTML = answer;
                     
                     li.classList.add("container__answers__value");
                     
@@ -145,19 +146,23 @@ export default{
         }
     },
 
-    modalDialog: function (body, modal, modalContent, correctAnswers, startMenu, findApi){
-        console.log(modalContent);
-        console.log(modalContent.childNodes[5].childNodes);
-        let modalText = modalContent.childNodes[3].childNodes[0];
-        let modalButtonClose = modalContent.childNodes[5].childNodes[1];
-        let modalButtonRestart = modalContent.childNodes[5].childNodes[3];
+    modalDialog: function (body, modal, modalText, correctAnswers, startMenu, findApi){
+        modal.setAttribute("style", "display: flex;");
 
         modalText.textContent = "Du hade: " + correctAnswers + "/10" + " rätt!";
         
 
                 //måste få restart-knappen att funka
 
-        modalButtonClose.addEventListener("click", startMenu);
+        modalButtonClose.addEventListener("click", function(){
+            modal.setAttribute("style", "display: none;");
+            //rendera start
+        });
+
+        modalButtonRestart.addEventListener("click", function(){
+            modal.setAttribute("style", "display: none;");
+            //rendera nytt quiz
+        });
     }
  
 }
