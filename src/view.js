@@ -162,6 +162,7 @@ export default{
         modalButtonRestart.addEventListener("click", function(){
             modal.setAttribute("style", "display: none;");
             //rendera nytt quiz
+            
         });
     }
  
