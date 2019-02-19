@@ -4,7 +4,8 @@
   "description": "ux - inlämning",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup src/controller.js --file bundle.js --format iife --w"
   },
   "repository": {
     "type": "git",

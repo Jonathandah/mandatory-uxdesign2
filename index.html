@@ -30,21 +30,21 @@
       
       <!-- Modal -->
     
-      <div class="modals">
-        <div class="modal__content">
+      <div class="modals" style="display: none;" data-backdrop="static" data-keyboard="false">
+        <dialog class="modal__content">
           <div class="modal__content__header">
-            <p class="modal__content__header__title">Finished</p>
+            <p class="modal__content__header__title" tabindex="1">Finished</p>
           </div>
             
           <div class="modal__content__body">
-            <p class="modal__content__body__text"></p>
+            <p class="modal__content__body__text" tabindex="2"></p>
           </div>
             
           <div class="modal__content__footer">
-            <button class="modal__content__footer__cancle">Cancle</button>
-            <button class="modal__content__footer__restart">Restart</button>
+            <button class="modal__content__footer__cancel" tabindex="3">Cancel</button>
+            <button class="modal__content__footer__restart"tabindex="4">Restart</button>
           </div>
-        </div>
+        </dialog>
     </div>
 </body>
 </html>

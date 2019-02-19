@@ -38,9 +38,13 @@ export default{
         this.form = form;
         
         submitButton.textContent = "submit";
+
+        form.setAttribute("action", "#");
         
         form.addEventListener("submit", function(e){
-            submitForm
+            console.log("submit funkar")
+            submitForm();
+            e.preventDefault();
         });
         
         submitButton.setAttribute("type", "submit"); 
@@ -146,23 +150,30 @@ export default{
         }
     },
 
-    modalDialog: function (body, modal, modalText, correctAnswers, startMenu, findApi){
-        modal.setAttribute("style", "display: flex;");
+    modalDialog: function (obj, correctAnswers, startMenu, findApi){
+        console.log(obj);
+        obj.modalTitle.focus(); //den tabar alltid submit kanppen först av någon anledning? kolla med Andreas
+        obj.modal.setAttribute("style", "display: flex;");
+        obj.modalContent.setAttribute("open", "");
+        obj.modalText.textContent = "Du hade: " + correctAnswers + "/10" + " rätt!";
 
-        modalText.textContent = "Du hade: " + correctAnswers + "/10" + " rätt!";
-        
 
-                //måste få restart-knappen att funka
+        obj.modalContent.addEventListener('transitionend', (e) => {
+            obj.modalCancel.focus();
+          });
 
-        modalButtonClose.addEventListener("click", function(){
-            modal.setAttribute("style", "display: none;");
+        //måste få restart-knappen att funka
+        obj.modalCancel.addEventListener("click", function(){
+            obj.modal.setAttribute("style", "display: none;");
+            startMenu();
             //rendera start
         });
 
-        modalButtonRestart.addEventListener("click", function(){
-            modal.setAttribute("style", "display: none;");
+        obj.modalRestart.addEventListener("click", function(){
+            obj.modal.setAttribute("style", "display: none;");
+            document.documentElement.scrollTop = 0;
             //rendera nytt quiz
-            
+            findApi();
         });
     }
  

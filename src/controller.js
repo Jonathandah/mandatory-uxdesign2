@@ -34,8 +34,15 @@ function findApi (){
 }
 
 function submitForm (){
-    let modals = document.querySelector(".modals");
-    let modalText = document.querySelector(".modal__content__body__text");
+    console.log("submitform körs");
+    let obj ={
+        modal: document.querySelector(".modals"),
+        modalContent: document.querySelector(".modal__content"),
+        modalTitle: document.querySelector(".modal__content__header__title"),
+        modalText: document.querySelector(".modal__content__body__text"),
+        modalCancel: document.querySelector(".modal__content__footer__cancel"),
+        modalRestart: document.querySelector(".modal__content__footer__restart"), 
+    }
     let answers = view.answers;
     
     console.log(answers);
@@ -43,7 +50,7 @@ function submitForm (){
     model.formRequirements(answers);
     let correctAnswers = model.checkAnswers(answers);
     model.statsUpdate(correctAnswers);
-    view.modalDialog(body, modal, modalText, correctAnswers, startMenu, findApi);
+    view.modalDialog(obj, correctAnswers, startMenu, findApi);
 }
 
 function controllMenu(){
