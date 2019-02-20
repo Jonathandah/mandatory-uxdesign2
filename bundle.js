@@ -10,6 +10,7 @@
 
         renderStart: function(main, findApi){
             main.innerHTML = "";
+            let container = document.createElement("div");
             let h1 = document.createElement("h1");
             let button = document.createElement("button");
 
@@ -17,16 +18,17 @@
             
             button.id = "quizButton";
 
-            button.classList.add("btn", "btn-dark", "btn-lg");
+            button.classList.add("btn", "btn-dark");
             h1.classList.add("title");
+            container.classList.add("startContiner");
 
             h1.textContent = "Game Of Quiz";
             button.textContent = "Large button";
 
             button.addEventListener("click", findApi);
-
-            main.appendChild(h1);
-            main.appendChild(button);
+            container.appendChild(h1);
+            container.appendChild(button);
+            main.appendChild(container);
 
         },
 
@@ -107,9 +109,23 @@
             main.appendChild(form);
         },
 
-        renderMenu: function(buttonValue){
-            let body = document.querySelector("body");
+        renderMenu: function(sidebar, boolean){
+            if(boolean === true){
+                sidebar.sidebarMenu.setAttribute("style", "display:flex");
+            }
+            else{
+                sidebar.sidebarMenu.setAttribute("style", "display:none");  
+            }
 
+            sidebar.sidebarMenu.setAttribute("open", "");
+            sidebar.gameScreen.focus();
+
+            sidebar.sidebarMenu.addEventListener('transitionend', (e) => {
+                sidebar.gameScreen.focus();
+              });
+
+            /*
+            let body = document.querySelector("body");
             if(buttonValue === true){
                 let sideBar = document.createElement("div");
                 let sideBar_header = document.createElement("div");
@@ -149,6 +165,7 @@
                 this.sideBar.innerHTML = "";
                 body.removeChild(this.sideBar);
             }
+            */
         },
 
         modalDialog: function (obj, correctAnswers, startMenu, findApi){
@@ -160,7 +177,7 @@
 
 
             obj.modalContent.addEventListener('transitionend', (e) => {
-                obj.modalCancel.focus();
+                obj.modalTitle.focus();
               });
 
             //måste få restart-knappen att funka
@@ -306,7 +323,7 @@
     }
 
     function submitForm (){
-        console.log("submitform körs");
+        let answers = view.answers;
         let obj ={
             modal: document.querySelector(".modals"),
             modalContent: document.querySelector(".modal__content"),
@@ -315,8 +332,6 @@
             modalCancel: document.querySelector(".modal__content__footer__cancel"),
             modalRestart: document.querySelector(".modal__content__footer__restart"), 
         };
-        let answers = view.answers;
-        
         console.log(answers);
         let correctAnswers = model.checkAnswers(answers);
         model.statsUpdate(correctAnswers);
@@ -324,13 +339,25 @@
     }
 
     function controllMenu(){
-        if(model.navbarButton === false){
+        console.log("sidebartoggled");
+    let sidebar= {
+        sidebarMenu: document.querySelector(".sidebar"),
+        header: document.querySelector(".sidebar__header"),
+        title: document.querySelector(".sidebar__header__title"),
+        content: document.querySelector(".sidebar__content"),
+        gameScreen: document.querySelector(".gameScreenLink"),
+        stats: document.querySelector(".statsLink"),
+        about: document.querySelector(".aboutLink"),
+    };
+       if(model.navbarButton === false){
             model.navbarButton = true;
-            view.renderMenu(model.navbarButton);
+            console.log("körtrue");
+            view.renderMenu(sidebar, model.navbarButton);
             
         }else{
             model.navbarButton = false;
-            view.renderMenu(model.navbarButton);
+            console.log("körfalse");
+            view.renderMenu(sidebar, model.navbarButton);
         }
     }
     let navbarButton = document.querySelector(".navbar-toggler");

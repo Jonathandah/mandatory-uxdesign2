@@ -34,7 +34,7 @@ function findApi (){
 }
 
 function submitForm (){
-    console.log("submitform körs");
+    let answers = view.answers;
     let obj ={
         modal: document.querySelector(".modals"),
         modalContent: document.querySelector(".modal__content"),
@@ -43,8 +43,6 @@ function submitForm (){
         modalCancel: document.querySelector(".modal__content__footer__cancel"),
         modalRestart: document.querySelector(".modal__content__footer__restart"), 
     }
-    let answers = view.answers;
-    
     console.log(answers);
     
     model.formRequirements(answers);
@@ -54,13 +52,25 @@ function submitForm (){
 }
 
 function controllMenu(){
-    if(model.navbarButton === false){
+    console.log("sidebartoggled")
+let sidebar= {
+    sidebarMenu: document.querySelector(".sidebar"),
+    header: document.querySelector(".sidebar__header"),
+    title: document.querySelector(".sidebar__header__title"),
+    content: document.querySelector(".sidebar__content"),
+    gameScreen: document.querySelector(".gameScreenLink"),
+    stats: document.querySelector(".statsLink"),
+    about: document.querySelector(".aboutLink"),
+}
+   if(model.navbarButton === false){
         model.navbarButton = true
-        view.renderMenu(model.navbarButton);
+        console.log("körtrue");
+        view.renderMenu(sidebar, model.navbarButton);
         
     }else{
         model.navbarButton = false
-        view.renderMenu(model.navbarButton);
+        console.log("körfalse");
+        view.renderMenu(sidebar, model.navbarButton);
     }
 }
 let navbarButton = document.querySelector(".navbar-toggler");

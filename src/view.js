@@ -9,6 +9,7 @@ export default{
 
     renderStart: function(main, findApi){
         main.innerHTML = "";
+        let container = document.createElement("div");
         let h1 = document.createElement("h1");
         let button = document.createElement("button");
 
@@ -16,16 +17,17 @@ export default{
         
         button.id = "quizButton";
 
-        button.classList.add("btn", "btn-dark", "btn-lg");
+        button.classList.add("btn", "btn-dark");
         h1.classList.add("title");
+        container.classList.add("startContiner");
 
         h1.textContent = "Game Of Quiz"
         button.textContent = "Large button";
 
         button.addEventListener("click", findApi);
-
-        main.appendChild(h1);
-        main.appendChild(button);
+        container.appendChild(h1);
+        container.appendChild(button);
+        main.appendChild(container);
 
     },
 
@@ -106,9 +108,23 @@ export default{
         main.appendChild(form);
     },
 
-    renderMenu: function(buttonValue){
-        let body = document.querySelector("body");
+    renderMenu: function(sidebar, boolean){
+        if(boolean === true){
+            sidebar.sidebarMenu.setAttribute("style", "display:flex");
+        }
+        else{
+            sidebar.sidebarMenu.setAttribute("style", "display:none");  
+        }
 
+        sidebar.sidebarMenu.setAttribute("open", "");
+        sidebar.gameScreen.focus();
+
+        sidebar.sidebarMenu.addEventListener('transitionend', (e) => {
+            sidebar.gameScreen.focus();
+          });
+
+        /*
+        let body = document.querySelector("body");
         if(buttonValue === true){
             let sideBar = document.createElement("div");
             let sideBar_header = document.createElement("div");
@@ -148,6 +164,7 @@ export default{
             this.sideBar.innerHTML = "";
             body.removeChild(this.sideBar);
         }
+        */
     },
 
     modalDialog: function (obj, correctAnswers, startMenu, findApi){
@@ -159,7 +176,7 @@ export default{
 
 
         obj.modalContent.addEventListener('transitionend', (e) => {
-            obj.modalCancel.focus();
+            obj.modalTitle.focus();
           });
 
         //måste få restart-knappen att funka
