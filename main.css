@@ -24,25 +24,28 @@ main{
     width:200px;
 }
 
-.sidebar__backrgound{
+.sidebar__background{
     z-index: 80;
+    top: 0px;
     position: absolute;
-    height: 1000px;
-    width: 1000px;
+    height: 100%;
+    width: 100%;
     background: rgba(0, 0, 0, 0.301);
 }
 .sidebar[open]:not(:focus-within) {
-    background-color: rgb(0, 255, 55);
     transition: background-color 0.01s;
 }
 .sidebar{
+    z-index: 1000;
     position: absolute;
     width: 300px;
     height: 100%;
-    background: red;
+    background: rgb(56, 56, 56);
     flex-direction: column;
     top: 0px;
     transition: all ease-in 0.5s;
+    color: white;
+    border: none;
 }
 .sidebar__header{
     position: relative;
@@ -51,7 +54,7 @@ main{
     align-items: center;
     width: 100%;
     height: 200px;
-    background: rgba(0, 0, 255, 0.356);
+    background: rgb(56, 56, 56);
 }
 
 .sidebar__content{
@@ -62,15 +65,19 @@ main{
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background: rgba(0, 255, 76, 0.356);
+    background: rgb(56, 56, 56);
 }
 
 .aLink{
-    padding: 50px; 
+    padding: 50px;
+    width: 200px;
+    border: none;
+    background:  rgb(83, 83, 83);
 }
 
 .container__answers{
     list-style: none;
+
 }
 
 .modals{

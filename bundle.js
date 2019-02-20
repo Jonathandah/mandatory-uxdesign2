@@ -110,11 +110,14 @@
         },
 
         renderMenu: function(sidebar, boolean){
+            console.log(sidebar.background);
             if(boolean === true){
-                sidebar.sidebarMenu.setAttribute("style", "display:flex");
+                sidebar.sidebarMenu.setAttribute("style", "display: flex");
+                sidebar.background.setAttribute("style", "display: flex");
             }
             else{
                 sidebar.sidebarMenu.setAttribute("style", "display:none");  
+                sidebar.background.setAttribute("style", "display: none");
             }
 
             sidebar.sidebarMenu.setAttribute("open", "");
@@ -206,7 +209,7 @@
             gamesPlayed: 0,
             correctAnswers: 0,
             incorrectAnswers: 0,
-            correctPercentage: null,
+            correctPercentage: null, //måste fixas så att den funkar
         },
       /*  
         getApi: function(){
@@ -277,8 +280,7 @@
             return count;
         }, 
 
-        formRequirements: function (answers){
-        },
+
 
         statsUpdate: function (currentStats){
             console.log(this.stats);
@@ -323,6 +325,7 @@
     }
 
     function submitForm (){
+       
         let answers = view.answers;
         let obj ={
             modal: document.querySelector(".modals"),
@@ -333,6 +336,7 @@
             modalRestart: document.querySelector(".modal__content__footer__restart"), 
         };
         console.log(answers);
+        
         let correctAnswers = model.checkAnswers(answers);
         model.statsUpdate(correctAnswers);
         view.modalDialog(obj, correctAnswers, startMenu, findApi);
@@ -341,6 +345,7 @@
     function controllMenu(){
         console.log("sidebartoggled");
     let sidebar= {
+        background: document.querySelector(".sidebar__background"),
         sidebarMenu: document.querySelector(".sidebar"),
         header: document.querySelector(".sidebar__header"),
         title: document.querySelector(".sidebar__header__title"),
@@ -361,6 +366,8 @@
         }
     }
     let navbarButton = document.querySelector(".navbar-toggler");
+    let sidebarFade = document.querySelector(".sidebar__background");
+    sidebarFade.addEventListener("click", controllMenu);
     navbarButton.addEventListener("click", controllMenu);
 
 }());

@@ -109,11 +109,14 @@ export default{
     },
 
     renderMenu: function(sidebar, boolean){
+        console.log(sidebar.background);
         if(boolean === true){
-            sidebar.sidebarMenu.setAttribute("style", "display:flex");
+            sidebar.sidebarMenu.setAttribute("style", "display: flex");
+            sidebar.background.setAttribute("style", "display: flex");
         }
         else{
             sidebar.sidebarMenu.setAttribute("style", "display:none");  
+            sidebar.background.setAttribute("style", "display: none");
         }
 
         sidebar.sidebarMenu.setAttribute("open", "");

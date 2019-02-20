@@ -7,7 +7,7 @@ export default{
         gamesPlayed: 0,
         correctAnswers: 0,
         incorrectAnswers: 0,
-        correctPercentage: null,
+        correctPercentage: null, //måste fixas så att den funkar
     },
   /*  
     getApi: function(){
@@ -78,11 +78,7 @@ export default{
         return count;
     }, 
 
-    formRequirements: function (answers){
-        for(let asnwer of asnwers){
-            // ska kolla så att alla radio buttons är itryckta 
-        }
-    },
+
 
     statsUpdate: function (currentStats){
         console.log(this.stats);

@@ -34,6 +34,7 @@ function findApi (){
 }
 
 function submitForm (){
+   
     let answers = view.answers;
     let obj ={
         modal: document.querySelector(".modals"),
@@ -45,7 +46,6 @@ function submitForm (){
     }
     console.log(answers);
     
-    model.formRequirements(answers);
     let correctAnswers = model.checkAnswers(answers);
     model.statsUpdate(correctAnswers);
     view.modalDialog(obj, correctAnswers, startMenu, findApi);
@@ -54,6 +54,7 @@ function submitForm (){
 function controllMenu(){
     console.log("sidebartoggled")
 let sidebar= {
+    background: document.querySelector(".sidebar__background"),
     sidebarMenu: document.querySelector(".sidebar"),
     header: document.querySelector(".sidebar__header"),
     title: document.querySelector(".sidebar__header__title"),
@@ -74,4 +75,6 @@ let sidebar= {
     }
 }
 let navbarButton = document.querySelector(".navbar-toggler");
+let sidebarFade = document.querySelector(".sidebar__background");
+sidebarFade.addEventListener("click", controllMenu);
 navbarButton.addEventListener("click", controllMenu);
