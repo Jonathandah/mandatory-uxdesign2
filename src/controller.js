@@ -78,3 +78,20 @@ let navbarButton = document.querySelector(".navbar-toggler");
 let sidebarFade = document.querySelector(".sidebar__background");
 sidebarFade.addEventListener("click", controllMenu);
 navbarButton.addEventListener("click", controllMenu);
+
+
+function switchMenu(e){
+    if(e.target.classList[1] === "gameScreenLink"){
+        startMenu();
+    }else if(e.target.classList[1] === "statsLink"){
+        view.renderStats(model.stats, main) //skapa den funckitonen 
+    }else if(e.target.classList[1] === "aboutLink"){
+        console.log("about");
+    }
+}
+let buttons = document.querySelectorAll(".aLink");
+for(let button of buttons){
+    button.addEventListener("click", switchMenu);
+}
+
+

@@ -118,7 +118,7 @@ export default{
             sidebar.sidebarMenu.setAttribute("style", "display:none");  
             sidebar.background.setAttribute("style", "display: none");
         }
-
+        console.log(sidebar.sidebarMenu);
         sidebar.sidebarMenu.setAttribute("open", "");
         sidebar.gameScreen.focus();
 
@@ -172,7 +172,8 @@ export default{
 
     modalDialog: function (obj, correctAnswers, startMenu, findApi){
         console.log(obj);
-        obj.modalTitle.focus(); //den tabar alltid submit kanppen först av någon anledning? kolla med Andreas
+        console.log(obj.modalTitle);
+        obj.modalCancel.focus(); //focusar inte rätt elemnt
         obj.modal.setAttribute("style", "display: flex;");
         obj.modalContent.setAttribute("open", "");
         obj.modalText.textContent = "Du hade: " + correctAnswers + "/10" + " rätt!";
@@ -180,7 +181,7 @@ export default{
 
         obj.modalContent.addEventListener('transitionend', (e) => {
             obj.modalTitle.focus();
-          });
+        });
 
         //måste få restart-knappen att funka
         obj.modalCancel.addEventListener("click", function(){
@@ -195,6 +196,61 @@ export default{
             //rendera nytt quiz
             findApi();
         });
+    },
+    renderStats: function (stats, main){
+        main.innerHTML = "";
+        let container = document.createElement("div");
+        let gamesSection = document.createElement("div");
+        let h2Games = document.createElement("h2");
+        let gamesStats = document.createElement("p");
+        let correctSection = document.createElement("div");
+        let h2Correct = document.createElement("h2");
+        let correctStats = document.createElement("p");
+        let incorrectSection = document.createElement("div");
+        let h2Incorrect = document.createElement("h2");
+        let incorrectStats = document.createElement("p");
+        let percentageSection = document.createElement("div");
+        let h2Percentage = document.createElement("h2");
+        let percentageStats = document.createElement("p");
+
+        container.classList.add("container");
+        gamesSection.classList.add("container__gamesSection");
+        correctSection.classList.add("container__correctSection");
+        incorrectSection.classList.add("container__incorrectSection");
+        percentageSection.classList.add("container__percentageSection");
+        h2Games.classList.add("container__gamesSection__title");
+        h2Correct.classList.add("container__correctSection__title");
+        h2Incorrect.classList.add("container__incorrectSection__title");
+        h2Percentage.classList.add("container__percentageSection__title");
+        gamesStats.classList.add("container__gamesSection__stat");
+        correctStats.classList.add("container__correctSection__stat");
+        incorrectStats.classList.add("container__incorrectSection__stat");
+        percentageStats.classList.add("container__percentageSection__stat");
+
+
+        
+        h2Games.textContent = "Games Played";
+        h2Correct.textContent = "Total Correct Answers";
+        h2Incorrect.textContent = "Total Incorrect Answers";
+        h2Percentage.textContent = "Correct rate";
+        gamesStats.textContent = stats.gamesPlayed;
+        correctStats.textContent = stats.correctAnswers;
+        incorrectStats.textContent = stats.incorrectAnswers;
+        percentageStats.textContent = stats.correctPercentage;
+
+        gamesSection.appendChild(h2Games);
+        gamesSection.appendChild(gamesStats);
+        correctSection.appendChild(h2Correct);
+        correctSection.appendChild(correctStats);
+        incorrectSection.appendChild(h2Incorrect);
+        incorrectSection.appendChild(incorrectStats);
+        percentageSection.appendChild(h2Percentage);
+        percentageSection.appendChild(percentageStats);
+        container.appendChild(gamesSection);
+        container.appendChild(correctSection);
+        container.appendChild(incorrectSection);
+        container.appendChild(percentageSection);
+        main.appendChild(container);
     }
  
 }
