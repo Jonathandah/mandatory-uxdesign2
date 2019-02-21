@@ -15,7 +15,9 @@ export default{
         let button = document.createElement("button");
 
         button.setAttribute("type", "button");
-        
+        button.setAttribute("tabindex", "0");
+        h1.setAttribute("tabindex", "0");
+        h1.setAttribute("aria-label", "Game Of Quiz");
         button.id = "quizButton";
 
         button.classList.add("btn", "btn-dark");
@@ -23,7 +25,7 @@ export default{
         container.classList.add("startContiner");
 
         h1.textContent = "Game Of Quiz"
-        button.textContent = "Large button";
+        button.textContent = "Start Quiz";
 
         button.addEventListener("click", findApi);
         container.appendChild(h1);
@@ -34,7 +36,6 @@ export default{
 
     render: function(array, main, randomize, submitForm){
         main.innerHTML = ""
-        let count = 1; //TEST
         let form = document.createElement("form");
         let submitButton = document.createElement("button");
         
@@ -53,9 +54,10 @@ export default{
         submitButton.setAttribute("type", "submit"); 
         submitButton.setAttribute("data-target", "#exampleModalCentered");
 
-        submitButton.classList.add("btn");
-        submitButton.classList.add("btn-dark");
-        submitButton.classList.add("btn-lg");
+        submitButton.classList.add("btn", "btn-lg");
+        submitButton.id = "submitButton";
+        form.id = "quizform";
+
 
         console.log(array);
         
@@ -76,8 +78,9 @@ export default{
                 p.classList.add("contianer__question");
                 h3.classList.add("container__order");
 
-                h3.setAttribute("tabindex", count++)
-                p.setAttribute("tabindex", count++);
+                h3.setAttribute("tabindex", "0");
+                h3.setAttribute("aria-label", "question" + number);
+                p.setAttribute("tabindex", "0");
                 this.test.push(h3);
                 this.test.push(p);
         
@@ -92,7 +95,8 @@ export default{
                     radio.setAttribute("name", number);
                     radio.setAttribute("value", answer);
                     radio.setAttribute("required", "");
-                    radio.setAttribute("tabindex", count++);
+                    radio.setAttribute("tabindex", "0");
+                    radio.setAttribute("aria-label", answer);
                     this.test.push(radio);
                     lable.setAttribute("for", number);
         
@@ -112,7 +116,8 @@ export default{
                 container.appendChild(ul);
                 form.appendChild(container);
             }
-            submitButton.setAttribute("tabindex", count++);
+            submitButton.setAttribute("tabindex", "0");
+            submitButton.setAttribute("aria-label", "Submit Button");
             this.test.push(submitButton);
         form.appendChild(submitButton);
         main.appendChild(form);
@@ -124,19 +129,12 @@ export default{
             body.setAttribute("style", "overflow: hidden;");
             sidebar.sidebarMenu.setAttribute("style", "display: flex");
             sidebar.background.setAttribute("style", "display: flex");
-            for(let item of this.test){
-                item.setAttribute("aria-hidden","true");
-                item.setAttribute("tabindex", "");
-            }
         }
         else{
             body.setAttribute("style", "overflow: visible;");
-            let count = 0;
             sidebar.sidebarMenu.setAttribute("style", "display:none");  
             sidebar.background.setAttribute("style", "display: none");
-            for(let item of this.test){
-                item.setAttribute("tabindex", count++);
-            }
+
         }
         console.log(sidebar.sidebarMenu);
         sidebar.sidebarMenu.setAttribute("open", "");
@@ -251,14 +249,15 @@ export default{
         incorrectStats.classList.add("container__incorrectSection__stat");
         percentageStats.classList.add("container__percentageSection__stat");
 
-        h2Games.setAttribute("tabindex", "1");
-        gamesStats.setAttribute("tabindex", "2");
-        h2Correct.setAttribute("tabindex", "3");
-        correctStats.setAttribute("tabindex", "4");
-        h2Incorrect.setAttribute("tabindex", "5");
-        incorrectStats.setAttribute("tabindex", "6");
-        h2Percentage.setAttribute("tabindex", "7");
-        percentageStats.setAttribute("tabindex", "8");
+        h2Games.setAttribute("tabindex", "0");
+        h2Games.setAttribute("aria-label", "Games Played");
+        gamesStats.setAttribute("tabindex", "0");
+        h2Correct.setAttribute("tabindex", "0");
+        correctStats.setAttribute("tabindex", "0");
+        h2Incorrect.setAttribute("tabindex", "0");
+        incorrectStats.setAttribute("tabindex", "0");
+        h2Percentage.setAttribute("tabindex", "0");
+        percentageStats.setAttribute("tabindex", "0");
 
         
         h2Games.textContent = "Games Played";
@@ -297,8 +296,8 @@ export default{
         p.textContent = text;
         h2.textContent = "About";
 
-        h2.setAttribute("tabindex", "1");
-        p.setAttribute("tabindex", "2");
+        h2.setAttribute("tabindex", "0");
+        p.setAttribute("tabindex", "0");
 
         container.appendChild(h2);
         container.appendChild(p);
