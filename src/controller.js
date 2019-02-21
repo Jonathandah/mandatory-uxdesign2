@@ -48,7 +48,7 @@ function submitForm (){
     
     let correctAnswers = model.checkAnswers(answers);
     model.statsUpdate(correctAnswers);
-    view.modalDialog(obj, correctAnswers, startMenu, findApi);
+    view.modalDialog(obj, correctAnswers, startMenu, findApi, main);
 }
 
 function controllMenu(){
@@ -66,12 +66,12 @@ let sidebar= {
    if(model.navbarButton === false){
         model.navbarButton = true
         console.log("körtrue");
-        view.renderMenu(sidebar, model.navbarButton);
+        view.renderMenu(sidebar, model.navbarButton, body);
         
     }else{
         model.navbarButton = false
         console.log("körfalse");
-        view.renderMenu(sidebar, model.navbarButton);
+        view.renderMenu(sidebar, model.navbarButton, body);
     }
 }
 let navbarButton = document.querySelector(".navbar-toggler");
@@ -87,6 +87,7 @@ function switchMenu(e){
         view.renderStats(model.stats, main) //skapa den funckitonen 
     }else if(e.target.classList[1] === "aboutLink"){
         console.log("about");
+        view.renderAbout(model.aboutText, main);
     }
 }
 let buttons = document.querySelectorAll(".aLink");

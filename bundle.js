@@ -7,6 +7,7 @@
         sideBar: undefined,
 
         answers:[],
+        test:[],
 
         renderStart: function(main, findApi){
             main.innerHTML = "";
@@ -34,7 +35,7 @@
 
         render: function(array, main, randomize, submitForm){
             main.innerHTML = "";
-
+            let count = 1; //TEST
             let form = document.createElement("form");
             let submitButton = document.createElement("button");
             
@@ -60,6 +61,7 @@
             console.log(array);
             
                 for(let question of array){
+                    
                     let container = document.createElement("div");
                     let h3 = document.createElement("h3");
                     let p = document.createElement("p");
@@ -74,6 +76,11 @@
                     ul.classList.add("container__answers");
                     p.classList.add("contianer__question");
                     h3.classList.add("container__order");
+
+                    h3.setAttribute("tabindex", count++);
+                    p.setAttribute("tabindex", count++);
+                    this.test.push(h3);
+                    this.test.push(p);
             
                     let allAnswers = randomize(question.correct_answer, question.incorrect_answers);
             
@@ -86,6 +93,8 @@
                         radio.setAttribute("name", number);
                         radio.setAttribute("value", answer);
                         radio.setAttribute("required", "");
+                        radio.setAttribute("tabindex", count++);
+                        this.test.push(radio);
                         lable.setAttribute("for", number);
             
                         lable.innerHTML = answer;
@@ -104,20 +113,31 @@
                     container.appendChild(ul);
                     form.appendChild(container);
                 }
-
+                submitButton.setAttribute("tabindex", count++);
+                this.test.push(submitButton);
             form.appendChild(submitButton);
             main.appendChild(form);
         },
 
-        renderMenu: function(sidebar, boolean){
+        renderMenu: function(sidebar, boolean, body){
             console.log(sidebar.background);
             if(boolean === true){
+                body.setAttribute("style", "overflow: hidden;");
                 sidebar.sidebarMenu.setAttribute("style", "display: flex");
                 sidebar.background.setAttribute("style", "display: flex");
+                for(let item of this.test){
+                    item.setAttribute("aria-hidden","true");
+                    item.setAttribute("tabindex", "");
+                }
             }
             else{
+                body.setAttribute("style", "overflow: visible;");
+                let count = 0;
                 sidebar.sidebarMenu.setAttribute("style", "display:none");  
                 sidebar.background.setAttribute("style", "display: none");
+                for(let item of this.test){
+                    item.setAttribute("tabindex", count++);
+                }
             }
             console.log(sidebar.sidebarMenu);
             sidebar.sidebarMenu.setAttribute("open", "");
@@ -171,14 +191,18 @@
             */
         },
 
-        modalDialog: function (obj, correctAnswers, startMenu, findApi){
+        modalDialog: function (obj, correctAnswers, startMenu, findApi, main){
             console.log(obj);
             console.log(obj.modalTitle);
-            obj.modalCancel.focus(); //focusar inte rätt elemnt
+            //main.innerHTML = "";
+            obj.modalContent.focus(); //focusar inte rätt elemnt
             obj.modal.setAttribute("style", "display: flex;");
             obj.modalContent.setAttribute("open", "");
             obj.modalText.textContent = "Du hade: " + correctAnswers + "/10" + " rätt!";
-
+            
+            for(let item of this.test){
+                item.setAttribute("tabindex", "");
+            }
 
             obj.modalContent.addEventListener('transitionend', (e) => {
                 obj.modalTitle.focus();
@@ -214,11 +238,11 @@
             let h2Percentage = document.createElement("h2");
             let percentageStats = document.createElement("p");
 
-            container.classList.add("container");
-            gamesSection.classList.add("container__gamesSection");
-            correctSection.classList.add("container__correctSection");
-            incorrectSection.classList.add("container__incorrectSection");
-            percentageSection.classList.add("container__percentageSection");
+            container.classList.add("container", "--flexCenter");
+            gamesSection.classList.add("container__gamesSection", "--flexCenter");
+            correctSection.classList.add("container__correctSection", "--flexCenter");
+            incorrectSection.classList.add("container__incorrectSection", "--flexCenter");
+            percentageSection.classList.add("container__percentageSection", "--flexCenter");
             h2Games.classList.add("container__gamesSection__title");
             h2Correct.classList.add("container__correctSection__title");
             h2Incorrect.classList.add("container__incorrectSection__title");
@@ -228,6 +252,14 @@
             incorrectStats.classList.add("container__incorrectSection__stat");
             percentageStats.classList.add("container__percentageSection__stat");
 
+            h2Games.setAttribute("tabindex", "1");
+            gamesStats.setAttribute("tabindex", "2");
+            h2Correct.setAttribute("tabindex", "3");
+            correctStats.setAttribute("tabindex", "4");
+            h2Incorrect.setAttribute("tabindex", "5");
+            incorrectStats.setAttribute("tabindex", "6");
+            h2Percentage.setAttribute("tabindex", "7");
+            percentageStats.setAttribute("tabindex", "8");
 
             
             h2Games.textContent = "Games Played";
@@ -252,11 +284,33 @@
             container.appendChild(incorrectSection);
             container.appendChild(percentageSection);
             main.appendChild(container);
+        },
+        renderAbout: function (text, main){
+            main.innerHTML = "";
+            let container = document.createElement("div");
+            let h2 = document.createElement("h2");
+            let p = document.createElement("p");
+
+            container.classList.add("container", "--flexCenter");
+            h2.classList.add("container__tilte");
+            p.classList.add("container__text");
+
+            p.textContent = text;
+            h2.textContent = "About";
+
+            h2.setAttribute("tabindex", "1");
+            p.setAttribute("tabindex", "2");
+
+            container.appendChild(h2);
+            container.appendChild(p);
+            main.appendChild(container);
+
         }
      
     };
 
     var model = {
+        aboutText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem mollitia illum, nihil cupiditate architecto voluptatibus ut! Repellendus, a. Esse aliquid necessitatibus sequi, labore excepturi aliquam modi ea doloribus veritatis quos. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem mollitia illum, nihil cupiditate architecto voluptatibus ut! Repellendus, a. Esse aliquid necessitatibus sequi, labore excepturi aliquam modi ea doloribus veritatis quos.",
         currentArray: undefined,
 
         navbarButton: false,
@@ -395,7 +449,7 @@
         
         let correctAnswers = model.checkAnswers(answers);
         model.statsUpdate(correctAnswers);
-        view.modalDialog(obj, correctAnswers, startMenu, findApi);
+        view.modalDialog(obj, correctAnswers, startMenu, findApi, main);
     }
 
     function controllMenu(){
@@ -413,12 +467,12 @@
        if(model.navbarButton === false){
             model.navbarButton = true;
             console.log("körtrue");
-            view.renderMenu(sidebar, model.navbarButton);
+            view.renderMenu(sidebar, model.navbarButton, body);
             
         }else{
             model.navbarButton = false;
             console.log("körfalse");
-            view.renderMenu(sidebar, model.navbarButton);
+            view.renderMenu(sidebar, model.navbarButton, body);
         }
     }
     let navbarButton = document.querySelector(".navbar-toggler");
@@ -434,6 +488,7 @@
             view.renderStats(model.stats, main); //skapa den funckitonen 
         }else if(e.target.classList[1] === "aboutLink"){
             console.log("about");
+            view.renderAbout(model.aboutText, main);
         }
     }
     let buttons = document.querySelectorAll(".aLink");

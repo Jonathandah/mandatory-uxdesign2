@@ -1,4 +1,5 @@
 export default{
+    aboutText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem mollitia illum, nihil cupiditate architecto voluptatibus ut! Repellendus, a. Esse aliquid necessitatibus sequi, labore excepturi aliquam modi ea doloribus veritatis quos. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem mollitia illum, nihil cupiditate architecto voluptatibus ut! Repellendus, a. Esse aliquid necessitatibus sequi, labore excepturi aliquam modi ea doloribus veritatis quos.",
     currentArray: undefined,
 
     navbarButton: false,

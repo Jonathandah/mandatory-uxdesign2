@@ -33,6 +33,7 @@ main{
     background: rgba(0, 0, 0, 0.301);
 }
 .sidebar[open]:not(:focus-within) {
+    background: green;
     transition: background-color 0.01s;
 }
 .sidebar{
@@ -135,6 +136,11 @@ main{
 }
 
 
-
+.--flexCenter{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 
