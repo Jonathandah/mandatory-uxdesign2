@@ -4,6 +4,8 @@ export default{
     form: undefined,
 
     sideBar: undefined,
+    currentH1: undefined,
+    currentbutton: undefined,
 
     answers:[],
     test:[],
@@ -19,6 +21,11 @@ export default{
         h1.setAttribute("tabindex", "0");
         h1.setAttribute("aria-label", "Game Of Quiz");
         button.id = "quizButton";
+
+        this.test.push(h1);
+        this.test.push(button);
+        //this.currentH1 = h1;
+        //this.currentbutton = button;
 
         button.classList.add("btn", "btn-dark");
         h1.classList.add("title");
@@ -72,6 +79,8 @@ export default{
         
                 h3.textContent = "Q." + number;
                 p.innerHTML = question.question
+                this.test.push(h3);
+                this.test.push(p);
         
                 container.classList.add("container");
                 ul.classList.add("container__answers");
@@ -81,8 +90,6 @@ export default{
                 h3.setAttribute("tabindex", "0");
                 h3.setAttribute("aria-label", "question" + number);
                 p.setAttribute("tabindex", "0");
-                this.test.push(h3);
-                this.test.push(p);
         
                 let allAnswers = randomize(question.correct_answer, question.incorrect_answers);
         
@@ -97,13 +104,12 @@ export default{
                     radio.setAttribute("required", "");
                     radio.setAttribute("tabindex", "0");
                     radio.setAttribute("aria-label", answer);
-                    this.test.push(radio);
                     lable.setAttribute("for", number);
         
                     lable.innerHTML = answer;
                     
                     li.classList.add("container__answers__value");
-                    
+                    this.test.push(radio);
                     this.answers.push(radio); 
                     
                     li.appendChild(radio);
@@ -123,17 +129,48 @@ export default{
         main.appendChild(form);
     },
 
-    renderMenu: function(sidebar, boolean, body){
+    renderMenu: function(sidebar, boolean, body, menuButton){
         console.log(sidebar.background);
         if(boolean === true){
             body.setAttribute("style", "overflow: hidden;");
-            sidebar.sidebarMenu.setAttribute("style", "display: flex");
-            sidebar.background.setAttribute("style", "display: flex");
+            sidebar.sidebarMenu.setAttribute("style", "width: 300px; left:0px;");
+            sidebar.background.setAttribute("style", "width: 100%");
+            sidebar.sidebarMenu.classList.add("sidebar--show"); 
+            sidebar.gameScreen.setAttribute("tabindex", "1");
+            sidebar.stats.setAttribute("tabindex", "1");
+            sidebar.about.setAttribute("tabindex", "1");   
+            sidebar.title.setAttribute("tabindex", "1");   
+            sidebar.gameScreen.setAttribute("aria-hidden", "false");
+            sidebar.stats.setAttribute("aria-hidden", "false");
+            sidebar.about.setAttribute("aria-hidden", "false"); 
+            sidebar.title.setAttribute("aria-hidden", "false"); 
+            //this.currentH1.setAttribute("tabindex", "-1");
+            //this.currentbutton.setAttribute("tabindex", "-1");
+            for(let item of this.test){
+                item.setAttribute("tabindex", "-1");
+            }
+            menuButton.setAttribute("tabindex", "-1");
         }
         else{
             body.setAttribute("style", "overflow: visible;");
-            sidebar.sidebarMenu.setAttribute("style", "display:none");  
-            sidebar.background.setAttribute("style", "display: none");
+            sidebar.sidebarMenu.setAttribute("style", "width: 0px; left: -300px;");  
+            sidebar.background.setAttribute("style", "width: 0%");
+            sidebar.sidebarMenu.classList.remove("sidebar--show");  
+            sidebar.gameScreen.setAttribute("tabindex", "-1");
+            sidebar.stats.setAttribute("tabindex", "-1");
+            sidebar.about.setAttribute("tabindex", "-1"); 
+            sidebar.title.setAttribute("tabindex", "-1"); 
+            sidebar.gameScreen.setAttribute("aria-hidden", "true");
+            sidebar.stats.setAttribute("aria-hidden", "true");
+            sidebar.about.setAttribute("aria-hidden", "true"); 
+            sidebar.title.setAttribute("aria-hidden", "true"); 
+            //this.currentH1.setAttribute("tabindex", "0");
+            //this.currentbutton.setAttribute("tabindex", "0");
+            menuButton.setAttribute("tabindex", "0");
+
+            for(let item of this.test){
+                item.setAttribute("tabindex", "0");
+            }
 
         }
         console.log(sidebar.sidebarMenu);
@@ -143,49 +180,6 @@ export default{
         sidebar.sidebarMenu.addEventListener('transitionend', (e) => {
             sidebar.gameScreen.focus();
           });
-
-        /*
-        let body = document.querySelector("body");
-        if(buttonValue === true){
-            let sideBar = document.createElement("div");
-            let sideBar_header = document.createElement("div");
-            let sideBar_content = document.createElement("div");
-            let h2 = document.createElement("h2");
-            let aQuiz = document.createElement("a");
-            let aStats = document.createElement("a");
-            let aAbout = document.createElement("a");
-           
-            h2.textContent = "Game Of Quiz";
-            aQuiz.textContent = "Game Screen";
-            aStats.textContent = "Stats";
-            aAbout.textContent = "About";
-
-            aQuiz.setAttribute("href", "index.html");
-            aStats.setAttribute("href", "stats.html");
-            aAbout.setAttribute("href", "about.html");
-            
-            sideBar.classList.add("sidebar");
-            sideBar_header.classList.add("sidebar_header");
-            sideBar_content.classList.add("sidebar_content");
-            h2.classList.add("sidebarTitle");
-            aQuiz.classList.add("aLink");
-            aStats.classList.add("aLink");
-            aAbout.classList.add("aLink");
-
-            this.sideBar = sideBar;
-
-            sideBar_header.appendChild(h2);
-            sideBar_content.appendChild(aQuiz);
-            sideBar_content.appendChild(aStats);
-            sideBar_content.appendChild(aAbout);
-            sideBar.appendChild(sideBar_header);
-            sideBar.appendChild(sideBar_content);
-            body.appendChild(sideBar);
-        }else{
-            this.sideBar.innerHTML = "";
-            body.removeChild(this.sideBar);
-        }
-        */
     },
 
     modalDialog: function (obj, correctAnswers, startMenu, findApi, main){
@@ -258,6 +252,14 @@ export default{
         incorrectStats.setAttribute("tabindex", "0");
         h2Percentage.setAttribute("tabindex", "0");
         percentageStats.setAttribute("tabindex", "0");
+        this.test.push(h2Games);
+        this.test.push(gamesStats);
+        this.test.push(h2Correct);
+        this.test.push(correctStats);
+        this.test.push(h2Incorrect);
+        this.test.push(incorrectStats);
+        this.test.push(h2Percentage);
+        this.test.push(percentageStats);
 
         
         h2Games.textContent = "Games Played";
@@ -298,6 +300,9 @@ export default{
 
         h2.setAttribute("tabindex", "0");
         p.setAttribute("tabindex", "0");
+
+        this.test.push(h2);
+        this.test.push(p);
 
         container.appendChild(h2);
         container.appendChild(p);

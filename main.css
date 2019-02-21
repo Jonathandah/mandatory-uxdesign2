@@ -27,28 +27,34 @@ main{
 }
 
 .sidebar__background{
+    display: flex;
     z-index: 80;
     top: 0px;
     position: absolute;
     height: 100%;
-    width: 100%;
+    width: 0%;
     background: rgba(0, 0, 0, 0.301);
 }
-.sidebar[open]:not(:focus-within) {
-    background: green;
-    transition: background-color 0.01s;
-}
+
+
 .sidebar{
+    display: flex;
     z-index: 1000;
     position: absolute;
-    width: 300px;
+    width: 0px;
+    left: -300px;
     height: 100%;
     background: rgb(119, 20, 32);
     flex-direction: column;
     top: 0px;
-    transition: all ease-in 0.5s;
+    transition: linear 0.5s;
     color: white;
     border: none;
+}
+.sidebar--show{
+    left: 0px;
+    transition: linear 0.5s;
+    left: 0;
 }
 .sidebar__header{
     position: relative;

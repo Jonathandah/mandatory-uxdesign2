@@ -52,7 +52,8 @@ function submitForm (){
 }
 
 function controllMenu(){
-    console.log("sidebartoggled")
+    console.log("sidebartoggled");
+    let menuButton = document.querySelector("#menuButton");
 let sidebar= {
     background: document.querySelector(".sidebar__background"),
     sidebarMenu: document.querySelector(".sidebar"),
@@ -66,12 +67,12 @@ let sidebar= {
    if(model.navbarButton === false){
         model.navbarButton = true
         console.log("körtrue");
-        view.renderMenu(sidebar, model.navbarButton, body);
+        view.renderMenu(sidebar, model.navbarButton, body, menuButton);
         
     }else{
         model.navbarButton = false
         console.log("körfalse");
-        view.renderMenu(sidebar, model.navbarButton, body);
+        view.renderMenu(sidebar, model.navbarButton, body, menuButton);
     }
 }
 let navbarButton = document.querySelector(".navbar-toggler");
