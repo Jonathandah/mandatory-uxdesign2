@@ -3,14 +3,16 @@ import model from "./model";
 
 let body = document.querySelector("body");
 let main = document.querySelector("main");
-
-// fixa en render till start page till closebutton på modal-dialog
+let menuButton = document.querySelector("#menuButton");
+/*=============================Renderar startMenu=============================================*/
 function startMenu(){
     console.log("start Menu körs")
     view.renderStart(main, findApi);
 }
 startMenu();
+/*=============================Renderar startMenu End=============================================*/
 
+/*=============================Hämtar API:et=============================================*/
 function findApi (){
     let promise = new Promise(
         (resolve, reject) =>{
@@ -32,9 +34,10 @@ function findApi (){
     console.log(error)
 });   
 }
+/*=============================Hämtar API:et End=============================================*/
 
+/*=============================Submittar alla quizfrågor=============================================*/
 function submitForm (){
-   
     let answers = view.answers;
     let obj ={
         modal: document.querySelector(".modals"),
@@ -50,20 +53,24 @@ function submitForm (){
     model.statsUpdate(correctAnswers);
     view.modalDialog(obj, correctAnswers, startMenu, findApi, main);
 }
+/*=============================Submittar alla quizfrågor End=============================================*/
 
+
+/*=============================Renderar Sidebaren=============================================*/
 function controllMenu(){
     console.log("sidebartoggled");
-    let menuButton = document.querySelector("#menuButton");
-let sidebar= {
-    background: document.querySelector(".sidebar__background"),
-    sidebarMenu: document.querySelector(".sidebar"),
-    header: document.querySelector(".sidebar__header"),
-    title: document.querySelector(".sidebar__header__title"),
-    content: document.querySelector(".sidebar__content"),
-    gameScreen: document.querySelector(".gameScreenLink"),
-    stats: document.querySelector(".statsLink"),
-    about: document.querySelector(".aboutLink"),
-}
+
+    let sidebar= {
+        background: document.querySelector(".sidebar--background"),
+        sidebarMenu: document.querySelector(".sidebar"),
+        header: document.querySelector(".sidebar__header"),
+        title: document.querySelector(".sidebar__header__title"),
+        content: document.querySelector(".sidebar__content"),
+        gameScreen: document.querySelector(".gameScreenLink"),
+        stats: document.querySelector(".statsLink"),
+        about: document.querySelector(".aboutLink"),
+    }
+
    if(model.navbarButton === false){
         model.navbarButton = true
         console.log("körtrue");
@@ -76,24 +83,27 @@ let sidebar= {
     }
 }
 let navbarButton = document.querySelector(".navbar-toggler");
-let sidebarFade = document.querySelector(".sidebar__background");
+let sidebarFade = document.querySelector(".sidebar--background");
 sidebarFade.addEventListener("click", controllMenu);
 navbarButton.addEventListener("click", controllMenu);
 
+/*=============================Renderar Sidebaren End=============================================*/
 
+/*=============================Hanterar menyvalen i sidebaren=============================================*/
 function switchMenu(e){
     if(e.target.classList[1] === "gameScreenLink"){
         startMenu();
     }else if(e.target.classList[1] === "statsLink"){
-        view.renderStats(model.stats, main) //skapa den funckitonen 
+        view.renderStats(model.stats, main) 
     }else if(e.target.classList[1] === "aboutLink"){
         console.log("about");
         view.renderAbout(model.aboutText, main);
     }
 }
+
 let buttons = document.querySelectorAll(".aLink");
 for(let button of buttons){
     button.addEventListener("click", switchMenu);
 }
 
-
+/*=============================Hanterar menyvalen i sidebaren End=============================================*/

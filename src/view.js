@@ -4,8 +4,6 @@ export default{
     form: undefined,
 
     sideBar: undefined,
-    currentH1: undefined,
-    currentbutton: undefined,
 
     answers:[],
     test:[],
@@ -20,51 +18,50 @@ export default{
         button.setAttribute("tabindex", "0");
         h1.setAttribute("tabindex", "0");
         h1.setAttribute("aria-label", "Game Of Quiz");
-        button.id = "quizButton";
 
         this.test.push(h1);
         this.test.push(button);
-        //this.currentH1 = h1;
-        //this.currentbutton = button;
 
         button.classList.add("btn", "btn-dark");
         h1.classList.add("title");
         container.classList.add("startContiner");
+        button.id = "quizButton";
 
         h1.textContent = "Game Of Quiz"
         button.textContent = "Start Quiz";
 
         button.addEventListener("click", findApi);
+
         container.appendChild(h1);
         container.appendChild(button);
         main.appendChild(container);
-
     },
 
     render: function(array, main, randomize, submitForm){
         main.innerHTML = ""
         let form = document.createElement("form");
         let submitButton = document.createElement("button");
-        
+
+        this.test.push(submitButton);
         this.form = form;
         
         submitButton.textContent = "submit";
-
-        form.setAttribute("action", "#");
         
         form.addEventListener("submit", function(e){
             console.log("submit funkar")
             submitForm();
             e.preventDefault();
         });
-        
+
+        form.setAttribute("action", "#");
         submitButton.setAttribute("type", "submit"); 
         submitButton.setAttribute("data-target", "#exampleModalCentered");
+        submitButton.setAttribute("tabindex", "0");
+        submitButton.setAttribute("aria-label", "Submit Button");
 
         submitButton.classList.add("btn", "btn-lg");
         submitButton.id = "submitButton";
         form.id = "quizform";
-
 
         console.log(array);
         
@@ -78,7 +75,9 @@ export default{
                 let number = array.indexOf(question) + 1;//numret på frågan
         
                 h3.textContent = "Q." + number;
-                p.innerHTML = question.question
+
+                p.innerHTML = question.question;
+
                 this.test.push(h3);
                 this.test.push(p);
         
@@ -98,6 +97,9 @@ export default{
                     let li = document.createElement("li");
                     let radio = document.createElement("input");
                     let lable = document.createElement("lable");
+
+                    li.classList.add("container__answers__value");
+
                     radio.setAttribute("type", "radio");
                     radio.setAttribute("name", number);
                     radio.setAttribute("value", answer);
@@ -107,8 +109,7 @@ export default{
                     lable.setAttribute("for", number);
         
                     lable.innerHTML = answer;
-                    
-                    li.classList.add("container__answers__value");
+
                     this.test.push(radio);
                     this.answers.push(radio); 
                     
@@ -122,9 +123,6 @@ export default{
                 container.appendChild(ul);
                 form.appendChild(container);
             }
-            submitButton.setAttribute("tabindex", "0");
-            submitButton.setAttribute("aria-label", "Submit Button");
-            this.test.push(submitButton);
         form.appendChild(submitButton);
         main.appendChild(form);
     },
@@ -144,8 +142,7 @@ export default{
             sidebar.stats.setAttribute("aria-hidden", "false");
             sidebar.about.setAttribute("aria-hidden", "false"); 
             sidebar.title.setAttribute("aria-hidden", "false"); 
-            //this.currentH1.setAttribute("tabindex", "-1");
-            //this.currentbutton.setAttribute("tabindex", "-1");
+
             for(let item of this.test){
                 item.setAttribute("tabindex", "-1");
             }
@@ -164,8 +161,7 @@ export default{
             sidebar.stats.setAttribute("aria-hidden", "true");
             sidebar.about.setAttribute("aria-hidden", "true"); 
             sidebar.title.setAttribute("aria-hidden", "true"); 
-            //this.currentH1.setAttribute("tabindex", "0");
-            //this.currentbutton.setAttribute("tabindex", "0");
+
             menuButton.setAttribute("tabindex", "0");
 
             for(let item of this.test){
@@ -185,8 +181,8 @@ export default{
     modalDialog: function (obj, correctAnswers, startMenu, findApi, main){
         console.log(obj);
         console.log(obj.modalTitle);
-        //main.innerHTML = "";
-        obj.modalContent.focus(); //focusar inte rätt elemnt
+
+        obj.modalTitle.focus();
         obj.modal.setAttribute("style", "display: flex;");
         obj.modalContent.setAttribute("open", "");
         obj.modalText.textContent = "Du hade: " + correctAnswers + "/10" + " rätt!";
@@ -199,17 +195,17 @@ export default{
             obj.modalTitle.focus();
         });
 
-        //måste få restart-knappen att funka
         obj.modalCancel.addEventListener("click", function(){
             obj.modal.setAttribute("style", "display: none;");
+            document.documentElement.scrollTop = 0;
             startMenu();
-            //rendera start
+            //renderar start
         });
 
         obj.modalRestart.addEventListener("click", function(){
             obj.modal.setAttribute("style", "display: none;");
             document.documentElement.scrollTop = 0;
-            //rendera nytt quiz
+            //renderar nytt quiz
             findApi();
         });
     },
@@ -225,23 +221,18 @@ export default{
         let incorrectSection = document.createElement("div");
         let h2Incorrect = document.createElement("h2");
         let incorrectStats = document.createElement("p");
-        let percentageSection = document.createElement("div");
-        let h2Percentage = document.createElement("h2");
-        let percentageStats = document.createElement("p");
+
 
         container.classList.add("container", "--flexCenter");
         gamesSection.classList.add("container__gamesSection", "--flexCenter");
         correctSection.classList.add("container__correctSection", "--flexCenter");
         incorrectSection.classList.add("container__incorrectSection", "--flexCenter");
-        percentageSection.classList.add("container__percentageSection", "--flexCenter");
         h2Games.classList.add("container__gamesSection__title");
         h2Correct.classList.add("container__correctSection__title");
         h2Incorrect.classList.add("container__incorrectSection__title");
-        h2Percentage.classList.add("container__percentageSection__title");
         gamesStats.classList.add("container__gamesSection__stat");
         correctStats.classList.add("container__correctSection__stat");
         incorrectStats.classList.add("container__incorrectSection__stat");
-        percentageStats.classList.add("container__percentageSection__stat");
 
         h2Games.setAttribute("tabindex", "0");
         h2Games.setAttribute("aria-label", "Games Played");
@@ -250,26 +241,20 @@ export default{
         correctStats.setAttribute("tabindex", "0");
         h2Incorrect.setAttribute("tabindex", "0");
         incorrectStats.setAttribute("tabindex", "0");
-        h2Percentage.setAttribute("tabindex", "0");
-        percentageStats.setAttribute("tabindex", "0");
+
         this.test.push(h2Games);
         this.test.push(gamesStats);
         this.test.push(h2Correct);
         this.test.push(correctStats);
         this.test.push(h2Incorrect);
         this.test.push(incorrectStats);
-        this.test.push(h2Percentage);
-        this.test.push(percentageStats);
-
         
         h2Games.textContent = "Games Played";
         h2Correct.textContent = "Total Correct Answers";
         h2Incorrect.textContent = "Total Incorrect Answers";
-        h2Percentage.textContent = "Correct rate";
         gamesStats.textContent = stats.gamesPlayed;
         correctStats.textContent = stats.correctAnswers;
         incorrectStats.textContent = stats.incorrectAnswers;
-        percentageStats.textContent = stats.correctPercentage;
 
         gamesSection.appendChild(h2Games);
         gamesSection.appendChild(gamesStats);
@@ -277,12 +262,9 @@ export default{
         correctSection.appendChild(correctStats);
         incorrectSection.appendChild(h2Incorrect);
         incorrectSection.appendChild(incorrectStats);
-        percentageSection.appendChild(h2Percentage);
-        percentageSection.appendChild(percentageStats);
         container.appendChild(gamesSection);
         container.appendChild(correctSection);
         container.appendChild(incorrectSection);
-        container.appendChild(percentageSection);
         main.appendChild(container);
     },
     renderAbout: function (text, main){
@@ -307,7 +289,6 @@ export default{
         container.appendChild(h2);
         container.appendChild(p);
         main.appendChild(container);
-
     }
  
 }
